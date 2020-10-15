@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <!-- Webpage Title -->
+        <title>나홀로 쇼핑몰</title>
+
+        <!-- Required meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous">
+
+        <!-- JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+
+        <!--구글폰트-->
+        <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Sunflower:wght@500&display=swap"
+              rel="stylesheet">
+
+        <style>
+            .wrap {
+                margin: auto;
+                width: 500px;
+            }
+
+            .card-img-top {
+                width: 500px;
+                height: 300px;
+                background-size: cover;
+                background-position: center;
+            }
+
+            * {
+                font-family: 'Gugi', cursive;
+                font-family: 'Sunflower', sans-serif;
+            }
+
+            .order {
+                text-align: center;
+            }
+
+            .exchangeRate {
+                color: blue;
+
+            }
+
+
+
+        </style>
+
+        <script>
+
+
+            function order() {
+
+                let telInput = $('#inputCall').val();
+                let regExp = /^(01[016789]{1}|070|02|0[3-9]{1}[0-9]{1})-[0-9]{3,4}-[0-9]{4}$/;
+                let telTest = regExp.test(telInput)
+
+
+                if ($('#inputEmail4').val() == '') {
+                    alert('이름을 입력하시오');
+                } else if ($('#inputState').val() == '') {
+                    alert('주문수량을 입력하시오');
+                } else if ($('#inputAddress').val() == '') {
+                    alert('주소를 입력하시오');
+                } else if ($('#inputCall').val() == '') {
+                    alert('전화번호를 입력하시오');
+                } else if (!telTest) {
+                    alert('010-0000-0000 형식으로 입력하세요');
+                } else {
+                    alert("주문이 완료되었습니다.");
+                }
+            }
+
+
+            $(document).ready(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "https://api.manana.kr/exchange/rate.json",
+                    data: {},
+                    success: function (response) {
+                        let wonDalRate = response[1]['rate'];
+                        $('#chargeRate').append(wonDalRate);
+
+                    }
+                })
+            });
+
+        </script>
+
+    </head>
+    <body>
+        <div class="wrap">
+            <img class="card-img-top"
+                 src="https://image-cdn.hypb.st/https%3A%2F%2Fkr.hypebeast.com%2Ffiles%2F2019%2F10%2Fbest-cameras-under-600-usd-beginners-dslr-4k-body-2019-1-1.jpg?q=75&w=800&cbr=1&fit=max"
+                 alt="Card image cap">
+
+            <div class="content">
+                <h1>camera shop</h1>
+                <h5>가격 : 1,800,000원/개</h5>
+
+                <p>이 카메라는 세상에서 가장 아름다운 순간과 공간을 담아줍니다.</p>
+                <p class="exchangeRate">
+                    달러-원 환율:
+                    <span id="chargeRate"></span>
+                </p>
+                <div class="form-group">
+                    <label for="inputEmail4">주문자이름</label>
+                    <input type="email" class="form-control" id="inputEmail4" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="inputState">주문수량</label>
+                    <select id="inputState" class="form-control">
+                        <option selected value="">수량을선택하세요</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress">주소</label>
+                    <input type="text" class="form-control" id="inputAddress" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="inputCall">전화번호</label>
+                    <input type="text" class="form-control" id="inputCall" placeholder="">
+                </div>
+                <div class="order">
+                    <p>
+                        <button onclick="order()" type="button" class="btn btn-primary">주문하기</button>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
