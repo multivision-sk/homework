@@ -84,7 +84,7 @@
 
             $(document).ready(function () {
 
-                showReview() ;
+                showOrders() ;
 
                 $.ajax({
                     type: "GET",
@@ -120,7 +120,7 @@
                 });
             }
 
-            function showReview() {
+            function showOrders() {
                 // 1. 리뷰 목록을 서버에 요청하기
                 $.ajax({
                     type: "GET",
